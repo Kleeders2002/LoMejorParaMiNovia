@@ -99,31 +99,29 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.2;
+            opacity: 0.35;
         }
 
         .bg-image {
             position: absolute;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
+            width: 100vw;
+            height: 100vh;
             background-size: cover;
             background-position: center;
             opacity: 0;
-            animation: romanticFloat 10s infinite ease-in-out;
-            box-shadow: 0 0 30px rgba(255, 20, 68, 0.5);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: romanticFloat 12s infinite ease-in-out;
+            box-shadow: inset 0 0 200px rgba(139, 0, 0, 0.6);
         }
 
         @keyframes romanticFloat {
             0%, 100% { 
                 opacity: 0; 
-                transform: translateY(30px) scale(0.8) rotate(0deg); 
-                filter: blur(2px);
+                transform: scale(1.05); 
+                filter: blur(1px);
             }
             50% { 
-                opacity: 0.4; 
-                transform: translateY(-30px) scale(1.1) rotate(180deg); 
+                opacity: 0.25; 
+                transform: scale(1.1); 
                 filter: blur(0px);
             }
         }
@@ -524,7 +522,7 @@
                     <p><strong>Gracias por aparecer en mi vida y cambiar todo...</strong></p>
                     <p>El Jueves te mostraré con hechos lo mucho que te adoro, te deseo y te necesito.</p>
                     <p>Eres mi sol que ilumina mis mañanas, mi princesa que conquista mis sueños...</p>
-                    <p><strong>Pero sobre todo, eres mi mujer, mi todo y mi fuerza </strong> 😍💕</p>
+                    <p><strong>Pero sobre todo, eres mi mujer, mi todo, mi fuerza</strong> 😍💕</p>
                 </div>
                 
                 <div class="countdown" id="countdown">
@@ -548,7 +546,7 @@
                 
                 <div class="music-player locked" id="musicPlayer">
                     <button class="play-btn" id="playBtn">▶</button>
-                    <div class="music-title">Tu Canción</div>
+                    <div class="music-title">Nuestra Historia, Nuestra Canción</div>
                     <audio id="audio" preload="auto">
                         <source src="cancion-instrumental.mp3" type="audio/mpeg">
                     </audio>
@@ -602,30 +600,52 @@
 
         function createFloatingWords() {
             const container = document.getElementById('loveWords');
-            loveWords.forEach((word, index) => {
+            
+            // Función para crear palabras de manera totalmente aleatoria
+            function createRandomWord() {
+                const randomWord = loveWords[Math.floor(Math.random() * loveWords.length)];
+                const wordElement = document.createElement('div');
+                wordElement.className = 'love-word';
+                wordElement.textContent = randomWord;
+                
+                // Posición completamente aleatoria
+                wordElement.style.left = Math.random() * 85 + 5 + '%';
+                wordElement.style.top = Math.random() * 85 + 5 + '%';
+                wordElement.style.animationDelay = Math.random() * 4 + 's';
+                wordElement.style.fontSize = (Math.random() * 10 + 14) + 'px';
+                wordElement.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                
+                container.appendChild(wordElement);
+                
+                // Remover después de la animación
                 setTimeout(() => {
-                    const wordElement = document.createElement('div');
-                    wordElement.className = 'love-word';
-                    wordElement.textContent = word;
-                    wordElement.style.left = Math.random() * 80 + 10 + '%';
-                    wordElement.style.top = Math.random() * 80 + 10 + '%';
-                    wordElement.style.animationDelay = Math.random() * 3 + 's';
-                    wordElement.style.fontSize = (Math.random() * 8 + 16) + 'px';
-                    container.appendChild(wordElement);
-                }, index * 1200);
-            });
+                    if (wordElement.parentNode) {
+                        wordElement.remove();
+                    }
+                }, 8000);
+            }
+            
+            // Crear palabras iniciales
+            for (let i = 0; i < 8; i++) {
+                setTimeout(createRandomWord, i * 800);
+            }
+            
+            // Continuar creando palabras aleatoriamente
+            setInterval(createRandomWord, 2500);
         }
 
         function createBackgroundImages() {
             const container = document.getElementById('backgroundImages');
+            
+            // Crear las 10 imágenes de fondo que ocupan toda la pantalla
             for (let i = 1; i <= 10; i++) {
                 const imgElement = document.createElement('div');
                 imgElement.className = 'bg-image';
                 imgElement.style.backgroundImage = `url('foto${i}.jpg')`;
-                imgElement.style.left = Math.random() * 70 + 15 + '%';
-                imgElement.style.top = Math.random() * 70 + 15 + '%';
-                imgElement.style.animationDelay = Math.random() * 5 + 's';
-                imgElement.style.animationDuration = (Math.random() * 5 + 8) + 's';
+                imgElement.style.left = '0';
+                imgElement.style.top = '0';
+                imgElement.style.animationDelay = (i - 1) * 3 + 's';
+                imgElement.style.animationDuration = (Math.random() * 4 + 10) + 's';
                 container.appendChild(imgElement);
             }
         }
