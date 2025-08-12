@@ -502,7 +502,6 @@
 <body>
     <div class="hearts-container" id="heartsContainer"></div>
     <div class="petals-container" id="petalsContainer"></div>
-    <div class="background-images" id="backgroundImages"></div>
     <div class="love-words" id="loveWords"></div>
     
     <div class="container">
@@ -651,19 +650,8 @@
                 const imgElement = document.createElement('div');
                 imgElement.className = 'bg-image';
                 imgElement.style.backgroundImage = `url('foto${i}.jpg')`;
-                
-                // Evitar el área central donde está el cuadro principal
-                let left, top;
-                do {
-                    left = Math.random() * 80 + 10;
-                    top = Math.random() * 80 + 10;
-                } while (
-                    // Evitar área central del cuadro (considerando el tamaño de la imagen 180px)
-                    (left > 10 && left < 75) && (top > 15 && top < 70)
-                );
-                
-                imgElement.style.left = left + '%';
-                imgElement.style.top = top + '%';
+                imgElement.style.left = Math.random() * 70 + 15 + '%';
+                imgElement.style.top = Math.random() * 70 + 15 + '%';
                 imgElement.style.animationDelay = Math.random() * 5 + 's';
                 imgElement.style.animationDuration = (Math.random() * 5 + 8) + 's';
                 container.appendChild(imgElement);
@@ -776,7 +764,6 @@
         // Initialize all animations
         window.addEventListener('load', () => {
             createFloatingWords();
-            createBackgroundImages();
             createFloatingHearts();
             createFallingPetals();
             createSparkles();
